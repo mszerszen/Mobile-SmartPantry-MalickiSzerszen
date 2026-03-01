@@ -11,36 +11,49 @@ import com.example.mobile_smart_pantry_project_iv.models.Product
 
 class ItemAdapter(
     private val context: Context,
-    private val items: List<Product>
+    private val items: MutableList<Product>
 ) : ArrayAdapter<Product>(context, 0, items) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val entry = items[position]
+        val binding: ItemProductBinding
+        val bindingLow: ItemLowBinding
+        val view: View
 
-        return if (entry.Quantity <= 5) {
-            val binding: ItemLowBinding = if(convertView == null) {
-                ItemLowBinding.inflate(LayoutInflater.from(context), parent, false)
-            } else {
-                ItemLowBinding.bind(convertView)
-            }
+        if (entry.Quantity <= 5) {
+            bindingLow = ItemLowBinding.inflate(LayoutInflater.from(context), parent, false)
 
-            binding.ProductID.text = entry.UUID
-            binding.ProductName.text = "${entry.Name} (${entry.Quantity})"
-            binding.ProductImage.setImageResource(
+            bindingLow.ProductID.text = entry.UUID
+            bindingLow.ProductName.text = "${entry.Name} (${entry.Quantity})"
+            bindingLow.ProductImage.setImageResource(
                 context.resources.getIdentifier(
                     entry.ImageRef,
                     "drawable",
                     context.packageName
                 )
             )
-            binding.ProductCategory.text = entry.Category
+            bindingLow.ProductCategory.text = entry.Category
 
-            binding.root
+            bindingLow.AddBtn.setOnClickListener {
+                entry.Quantity += 1
+                notifyDataSetChanged()
+                if (context is MainActivity) context.SaveJSON()
+            }
+
+            bindingLow.SubtractBtn.setOnClickListener {
+                if (entry.Quantity > 0) {
+                    entry.Quantity -= 1
+
+                    if (entry.Quantity == 0) {
+                        items.removeAt(position)
+                    }
+                }
+                notifyDataSetChanged()
+                if (context is MainActivity) context.SaveJSON()
+            }
+
+            view = bindingLow.root
         } else {
-            val binding: ItemProductBinding = if(convertView == null) {
-                ItemProductBinding.inflate(LayoutInflater.from(context), parent, false)
-            } else {
-                ItemProductBinding.bind(convertView)
-            }
+            binding = ItemProductBinding.inflate(LayoutInflater.from(context), parent, false)
 
             binding.ProductID.text = entry.UUID
             binding.ProductName.text = "${entry.Name} (${entry.Quantity})"
@@ -53,7 +66,27 @@ class ItemAdapter(
             )
             binding.ProductCategory.text = entry.Category
 
-            binding.root
+            binding.AddBtn.setOnClickListener {
+                entry.Quantity += 1
+                notifyDataSetChanged()
+                if (context is MainActivity) context.SaveJSON()
+            }
+
+            binding.SubtractBtn.setOnClickListener {
+                if (entry.Quantity > 0) {
+                    entry.Quantity -= 1
+
+                    if (entry.Quantity == 0) {
+                        items.removeAt(position)
+                    }
+                }
+                notifyDataSetChanged()
+                if (context is MainActivity) context.SaveJSON()
+            }
+
+            view = binding.root
         }
+
+        return view
     }
 }

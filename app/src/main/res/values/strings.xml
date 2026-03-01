@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">mobile-smart-pantry-project-iv</string>
+
+    <string-array name="icons">
+        <item>apple</item>
+        <item>bandage</item>
+        <item>bar</item>
+        <item>battery</item>
+        <item>can</item>
+        <item>hammer</item>
+        <item>helmet</item>
+        <item>medkit</item>
+        <item>oxygen_tank</item>
+        <item>pills</item>
+        <item>pizza</item>
+        <item>screwdriver</item>
+        <item>toolbox</item>
+        <item>water</item>
+        <item>wrench</item>
+    </string-array>
 </resources>
