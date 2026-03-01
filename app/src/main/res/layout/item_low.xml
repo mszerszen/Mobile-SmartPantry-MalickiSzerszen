@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FF8A80"
+    android:background="#D32F2F"
     android:padding="20dp"
     android:orientation="vertical">
 
@@ -32,6 +32,8 @@
                 android:id="@+id/ProductName"
                 android:text="Jabłko (4)"
                 android:textSize="25sp"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -39,6 +41,7 @@
                 android:id="@+id/ProductCategory"
                 android:text="Żywność"
                 android:textSize="20sp"
+                android:textColor="#FFCDD2"
                 />
             <TextView
                 android:layout_width="match_parent"
@@ -48,6 +51,7 @@
                 android:textSize="15sp"
                 android:gravity="bottom"
                 android:layout_weight="1"
+                android:textColor="#FFCDD2"
                 />
 
         </LinearLayout>
@@ -67,12 +71,16 @@
             android:text="Zwiększ Zapas"
             android:id="@+id/AddBtn"
             android:layout_marginRight="10dp"
+            android:backgroundTint="#FFFFFF"
+            android:textColor="#D32F2F"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Zmniejsz Zapas"
             android:id="@+id/SubtractBtn"
+            android:backgroundTint="#B71C1C"
+            android:textColor="#FFFFFF"
             />
 
     </LinearLayout>
