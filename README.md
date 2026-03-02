@@ -1,3 +1,6 @@
+
+Załoga: Aleksander Malicki & Marceli Szerszeń
+
 # 📱 Smart Pantry Project
 
 **Project**: *Red Planet Pantry (Mars Colony)*
