@@ -29,6 +29,16 @@
         android:backgroundTint="#37474F"
         android:textColor="#FFFFFF"
         />
+    <EditText
+        android:id="@+id/SearchEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Szukaj produktu..."
+        android:layout_margin="15dp"
+        android:padding="10dp"
+        android:backgroundTint="#00E5FF"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#90CAF9"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

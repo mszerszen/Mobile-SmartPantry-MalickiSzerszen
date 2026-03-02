@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,6 +16,7 @@ import com.example.mobile_smart_pantry_project_iv.models.Product
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
+import android.text.TextWatcher
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             if (newProduct != null) {
                 products.add(newProduct)
                 SaveJSON()
-                listAdapter.notifyDataSetChanged()
+                listAdapter.refreshFilter()
             }
         }
     }
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
             products.clear()
             products.addAll(loadedList)
-            listAdapter.notifyDataSetChanged()
+            listAdapter.refreshFilter()
         }
         catch (e: Exception) {
             Toast.makeText(
@@ -97,5 +99,13 @@ class MainActivity : AppCompatActivity() {
         binding.ItemsListView.adapter = listAdapter
 
         LoadJSON()
+
+        binding.SearchEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                listAdapter.filter.filter(s)
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
     }
 }
