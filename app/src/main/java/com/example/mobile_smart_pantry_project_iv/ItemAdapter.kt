@@ -15,6 +15,8 @@ class ItemAdapter(
 ) : ArrayAdapter<Product>(context, 0, items), android.widget.Filterable {
 
     private var filteredItems = items.toMutableList()
+    private var currentCategory: String? = null
+    private var currentSearch: String = ""
 
     override fun getCount(): Int = filteredItems.size
     override fun getItem(position: Int): Product = filteredItems[position]
@@ -42,7 +44,7 @@ class ItemAdapter(
                 if (entry.Quantity > 0) entry.Quantity -= 1
                 if (entry.Quantity == 0) {
                     items.remove(entry)
-                    refreshFilter()
+                    applyFilter()
                 } else notifyDataSetChanged()
                 if (context is MainActivity) context.SaveJSON()
             }
@@ -67,7 +69,7 @@ class ItemAdapter(
                 if (entry.Quantity > 0) entry.Quantity -= 1
                 if (entry.Quantity == 0) {
                     items.remove(entry)
-                    refreshFilter()
+                    applyFilter()
                 } else notifyDataSetChanged()
                 if (context is MainActivity) context.SaveJSON()
             }
@@ -81,12 +83,9 @@ class ItemAdapter(
     override fun getFilter(): android.widget.Filter {
         return object : android.widget.Filter() {
             override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val query = constraint?.toString()?.lowercase() ?: ""
-                filteredItems = if (query.isEmpty()) items.toMutableList() else {
-                    items.filter { it.Name.lowercase().contains(query) }.toMutableList()
-                }
+                currentSearch = constraint?.toString()?.lowercase() ?: ""
                 val results = FilterResults()
-                results.values = filteredItems
+                results.values = getFilteredList()
                 return results
             }
 
@@ -96,7 +95,26 @@ class ItemAdapter(
             }
         }
     }
+
+    fun filterByCategory(category: String?) {
+        currentCategory = category
+        applyFilter()
+    }
+
+    private fun applyFilter() {
+        filteredItems = getFilteredList()
+        notifyDataSetChanged()
+    }
+
+    private fun getFilteredList(): MutableList<Product> {
+        return items.filter { product ->
+            val matchesSearch = if (currentSearch.isEmpty()) true else product.Name.lowercase().contains(currentSearch)
+            val matchesCategory = if (currentCategory == null) true else product.Category.equals(currentCategory, ignoreCase = true)
+            matchesSearch && matchesCategory
+        }.toMutableList()
+    }
+
     fun refreshFilter() {
-        filter.filter("")
+        applyFilter()
     }
 }

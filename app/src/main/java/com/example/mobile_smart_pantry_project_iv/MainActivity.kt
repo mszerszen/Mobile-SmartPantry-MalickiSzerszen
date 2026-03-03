@@ -107,5 +107,11 @@ class MainActivity : AppCompatActivity() {
             }
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        binding.FilterAll.setOnClickListener { listAdapter.filterByCategory(null) }
+        binding.FilterFood.setOnClickListener { listAdapter.filterByCategory("Żywność") }
+        binding.FilterOxygen.setOnClickListener { listAdapter.filterByCategory("Tlen") }
+        binding.FilterTools.setOnClickListener { listAdapter.filterByCategory("Narzędzia") }
+        binding.FilterMedical.setOnClickListener { listAdapter.filterByCategory("Medyczne") }
     }
 }

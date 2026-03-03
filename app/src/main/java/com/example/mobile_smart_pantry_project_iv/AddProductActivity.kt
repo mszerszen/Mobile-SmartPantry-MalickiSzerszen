@@ -27,19 +27,28 @@ class AddProductActivity : AppCompatActivity() {
         }
 
         val icons = resources.getStringArray(R.array.icons)
-        val adapter = ArrayAdapter(
+        val iconAdapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
             icons
         )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.Icon.adapter = adapter
+        iconAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.Icon.adapter = iconAdapter
+
+        val categories = resources.getStringArray(R.array.categories)
+        val categoryAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            categories
+        )
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.CategorySpinner.adapter = categoryAdapter
 
         binding.Confirm.setOnClickListener {
             val UUID = binding.UUID.text.toString()
             val Name = binding.Name.text.toString()
             val Quantity = binding.Quantity.text.toString().toIntOrNull()
-            val Category = binding.Category.text.toString()
+            val Category = binding.CategorySpinner.selectedItem.toString()
             val Icon = binding.Icon.selectedItem.toString()
 
             if(
